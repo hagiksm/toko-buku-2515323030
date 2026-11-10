@@ -66,7 +66,18 @@
             <input type="text" id="price" name="price"
                    class="form-control @error('price') is-invalid @enderror"
                    value="{{ old('price', (int) $buku->price) }}">
+            <div class="form-text">Ketik angka saja, tanpa titik atau koma (contoh: 85000).</div>
             @error('price')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stok</label>
+            <input type="text" id="stock" name="stock"
+                   class="form-control @error('stock') is-invalid @enderror"
+                   value="{{ old('stock', $buku->stock) }}">
+            @error('stock')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
@@ -82,13 +93,13 @@
         </div>
 
         <div class="mb-3">
-            <label for="cover" class="form-label">Sampul (JPG/PNG, maksimal 2 MB)</label>
+            <label for="cover" class="form-label">Sampul (opsional, JPG/PNG, maksimal 2 MB)</label>
             <div class="mb-2">
-                <img src="{{ $buku->cover_url }}" alt="Sampul saat ini" style="max-height: 160px;" class="rounded border">
-                <div class="form-text">Sampul saat ini. Pilih berkas baru hanya bila ingin menggantinya.</div>
+                <img src="{{ $buku->cover_url }}" alt="Sampul saat ini" class="img-thumbnail" style="max-height: 120px;">
             </div>
             <input type="file" id="cover" name="cover"
                    class="form-control @error('cover') is-invalid @enderror">
+            <div class="form-text">Kosongkan bila tidak ingin mengganti sampul.</div>
             @error('cover')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror

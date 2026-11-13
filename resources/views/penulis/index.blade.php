@@ -8,10 +8,6 @@
         <a href="{{ route('penulis.create') }}" class="btn btn-primary">+ Tambah Penulis</a>
     </div>
 
-    @if (session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
-
     @if ($daftarPenulis->isEmpty())
         <div class="alert alert-info">Belum ada penulis.</div>
     @else

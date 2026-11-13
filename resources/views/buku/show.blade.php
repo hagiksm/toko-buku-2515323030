@@ -12,6 +12,9 @@
                 <span class="badge bg-secondary mb-2">{{ $buku->category->name }}</span>
                 <h1>{{ $buku->title }}</h1>
                 <p class="text-muted mb-1">Penulis: {{ $buku->author_name }}</p>
+                @if ($buku->author)
+                    <p class="text-muted mb-1">Penulis terdaftar: {{ $buku->author->name }}</p>
+                @endif
                 <p class="text-muted">Penerbit: {{ $buku->publisher?->name ?? 'belum diisi' }}</p>
                 @if ($buku->published_year)
                     <p class="text-muted">Tahun terbit: {{ $buku->published_year }}</p>

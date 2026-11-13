@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
@@ -48,6 +49,7 @@ class BookController extends Controller
         return view('buku.create', [
             'daftarKategori' => Category::orderBy('name')->get(),
             'daftarPenerbit' => Publisher::orderBy('name')->get(),
+            'daftarPenulis' => Author::orderBy('name')->get(),
         ]);
     }
 
@@ -68,7 +70,7 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $buku = Book::with(['category', 'publisher'])->find($id);
+        $buku = Book::with(['category', 'publisher', 'author'])->find($id);
 
         $bukuSerupa = $buku
             ? $buku->category->books()->whereKeyNot($buku->id)->latest('id')->limit(3)->get()
@@ -87,6 +89,7 @@ class BookController extends Controller
             'buku' => Book::findOrFail($id),
             'daftarKategori' => Category::orderBy('name')->get(),
             'daftarPenerbit' => Publisher::orderBy('name')->get(),
+            'daftarPenulis' => Author::orderBy('name')->get(),
         ]);
     }
 
@@ -132,6 +135,7 @@ class BookController extends Controller
         return [
             'title' => 'required|string|max:255',
             'author_name' => 'required|string|max:255',
+            'author_id' => 'nullable|exists:authors,id',
             'category_id' => 'required|exists:categories,id',
             'publisher_id' => 'required|exists:publishers,id',
             'price' => 'required|integer|min:0|max:99999999',
@@ -148,6 +152,7 @@ class BookController extends Controller
             'title.max' => 'Judul buku maksimal 255 karakter.',
             'author_name.required' => 'Nama penulis wajib diisi.',
             'author_name.max' => 'Nama penulis maksimal 255 karakter.',
+            'author_id.exists' => 'Penulis terdaftar yang dipilih tidak ditemukan.',
             'category_id.required' => 'Pilih salah satu kategori.',
             'category_id.exists' => 'Kategori yang dipilih tidak ditemukan.',
             'publisher_id.required' => 'Pilih salah satu penerbit.',

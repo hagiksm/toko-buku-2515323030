@@ -8,16 +8,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Book extends Model
 {
-protected $fillable = [
-    'category_id',
-    'publisher_id',
-    'title',
-    'author_name',
-    'price',
-    'published_year',
-    'stock',
-    'cover',
-];
+    protected $fillable = [
+        'category_id',
+        'publisher_id',
+        'author_id',
+        'title',
+        'author_name',
+        'price',
+        'published_year',
+        'stock',
+        'cover',
+    ];
 
     public function category(): BelongsTo
     {
@@ -27,6 +28,11 @@ protected $fillable = [
     public function publisher(): BelongsTo
     {
         return $this->belongsTo(Publisher::class);
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(Author::class);
     }
 
     protected function coverUrl(): Attribute

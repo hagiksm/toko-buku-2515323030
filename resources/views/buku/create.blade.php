@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('title', 'Tambah Buku — BookStore')
@@ -24,6 +25,22 @@
                    class="form-control @error('author_name') is-invalid @enderror"
                    value="{{ old('author_name') }}">
             @error('author_name')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="author_id" class="form-label">Penulis Terdaftar (opsional)</label>
+            <select id="author_id" name="author_id"
+                    class="form-select @error('author_id') is-invalid @enderror">
+                <option value="">-- Tidak ada --</option>
+                @foreach ($daftarPenulis as $penulis)
+                    <option value="{{ $penulis->id }}" @selected(old('author_id') == $penulis->id)>
+                        {{ $penulis->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('author_id')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
